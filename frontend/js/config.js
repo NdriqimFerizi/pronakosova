@@ -6,7 +6,7 @@
 const CONFIG = {
   // ── Backend URL ──────────────────────────────────────────────
   // Development:
-  API_BASE: 'https://backend-rho-six-60.vercel.app/api',
+  API_BASE: '/api',
   // Production (uncomment and change):
   // API_BASE: 'https://api.pronakosova.com/api',
 

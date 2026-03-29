@@ -6,7 +6,7 @@ const errorHandler=require('./middleware/errorHandler');
 connectDB();
 const app=express();
 app.use(helmet());
-app.use(cors({origin:[process.env.CLIENT_URL,'http://localhost:3000','http://127.0.0.1:5500','http://127.0.0.1:3000','null'],credentials:true,methods:['GET','POST','PUT','DELETE','OPTIONS']}));
+app.use(cors({origin:[process.env.CLIENT_URL,'http://localhost:3000','http://localhost:5001','http://127.0.0.1:5500','http://127.0.0.1:3000','null'],credentials:true,methods:['GET','POST','PUT','DELETE','OPTIONS']}));
 app.use(rateLimit({windowMs:15*60*1000,max:500}));
 app.use(express.json({limit:'10mb'}));
 app.use(express.urlencoded({extended:true,limit:'10mb'}));
