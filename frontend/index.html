@@ -34,10 +34,10 @@
     <strong id="dd-name">—</strong>
     <span id="dd-type">—</span>
   </div>
-  <a class="dd-item" href="#">👤 Profili Im</a>
-  <a class="dd-item" href="#">🏠 Prona e Mia</a>
-  <a class="dd-item" href="#">❤️ Të Ruajtura</a>
-  <a class="dd-item" href="#">✉️ Mesazhet</a>
+  <a class="dd-item" href="#" onclick="Dropdown.close('userDropdown');openDashboard('profile')">👤 Profili Im</a>
+  <a class="dd-item" href="#" onclick="Dropdown.close('userDropdown');openDashboard('listings')">🏠 Prona e Mia</a>
+  <a class="dd-item" href="#" onclick="Dropdown.close('userDropdown');openDashboard('saved')">❤️ Të Ruajtura</a>
+  <a class="dd-item" href="#" onclick="Dropdown.close('userDropdown');openDashboard('messages')">✉️ Mesazhet</a>
   <div style="height:1px;background:var(--border);margin:4px 0"></div>
   <a class="dd-item danger" onclick="logout()">🚪 Çkyçu</a>
 </div>
@@ -215,6 +215,31 @@
     <button class="btn-full" id="m-btn" onclick="submitAuth()">Krijo Llogari →</button>
     <div class="m-footer" id="m-foot">Keni llogari? <a href="#" onclick="openModal('login')">Hyni këtu</a></div>
   </div>
+</div>
+
+<!-- ── POST LISTING MODAL ── -->
+<div class="modal-overlay pl-modal-overlay" id="postListingModal">
+  <div class="pl-modal">
+    <div class="pl-modal-header">
+      <h2 id="pl-modal-title">Posto Pronën</h2>
+      <button class="modal-x" onclick="closePostListing()">✕</button>
+    </div>
+    <div class="pl-modal-body">
+      <form id="postListingForm" onsubmit="return false"></form>
+    </div>
+    <div class="pl-modal-footer">
+      <button class="btn-ghost" onclick="closePostListing()">Anulo</button>
+      <button class="btn-primary" id="pl-submit-btn" onclick="submitPostListing()">
+        Publiko Pronën →
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ── DASHBOARD PANEL ── -->
+<div class="detail-overlay" id="dashboardOverlay"
+  onclick="if(event.target===this)Dashboard.close()">
+  <div class="dashboard-panel" id="dashboardPanel"></div>
 </div>
 
 <!-- ── LISTING DETAIL PANEL ── -->
@@ -832,6 +857,8 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 <script src="js/inquiry.js"></script>
 <script src="js/builders.js"></script>
 <script src="js/search.js"></script>
+<script src="js/post-listing.js"></script>
+<script src="js/dashboard.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

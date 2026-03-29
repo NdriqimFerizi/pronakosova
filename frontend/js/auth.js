@@ -62,9 +62,11 @@ const Auth = {
       return;
     }
 
-    // Logged in — show avatar
+    // Logged in — show "Post" button for sellers/companies, then avatar
     const initial = (user.name || user.email || '?')[0].toUpperCase();
+    const canPost = ['seller', 'company'].includes(user.accountType) || user.role === 'admin';
     actions.innerHTML = `
+      ${canPost ? `<button class="btn-post" onclick="PostListing.open()">+ Posto Pronën</button>` : ''}
       <div class="user-avatar-btn" onclick="Dropdown.toggle('userDropdown')" title="${user.name}">
         ${user.avatar ? `<img src="${user.avatar}" alt="${user.name}">` : initial}
       </div>`;
