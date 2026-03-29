@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PronaKosova – Bli, Shit, Qiraja</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="logo" onclick="location.reload()"><b>Prona</b>Kosova</div>
+  <div class="nav-links">
+    <a href="#">Kreu</a>
+    <a href="#" onclick="filterByType('shitet')">Bli</a>
+    <a href="#" onclick="filterByType('me-qira')">Qiraja</a>
+    <a href="#" onclick="filterByType('i-ri')">Shit</a>
+    <a href="#" onclick="scrollToBuilders()">Ndërtuesit</a>
+    <a href="#">Kontakt</a>
+  </div>
+  <div class="nav-actions" id="navActions">
+    <button class="btn-ghost" onclick="openModal('login')">Hyrje</button>
+    <button class="btn-primary" onclick="openModal('register')">Regjistrohu</button>
+  </div>
+  <button class="nav-hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="user-dropdown" id="userDropdown">
+  <div class="user-dropdown-header">
+    <strong id="dd-name">—</strong>
+    <span id="dd-type">—</span>
+  </div>
+  <a class="dd-item" href="#">👤 Profili Im</a>
+  <a class="dd-item" href="#">🏠 Prona e Mia</a>
+  <a class="dd-item" href="#">❤️ Të Ruajtura</a>
+  <a class="dd-item" href="#">✉️ Mesazhet</a>
+  <div style="height:1px;background:var(--border);margin:4px 0"></div>
+  <a class="dd-item danger" onclick="logout()">🚪 Çkyçu</a>
+</div>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#" onclick="toggleMenu()">Kreu</a>
+  <a href="#" onclick="toggleMenu();filterByType('shitet')">Bli Pronë</a>
+  <a href="#" onclick="toggleMenu();filterByType('me-qira')">Qiraja</a>
+  <a href="#" onclick="toggleMenu()">Shit Pronë</a>
+  <a href="#" onclick="toggleMenu();scrollToBuilders()">Ndërtuesit</a>
+  <a href="#" onclick="toggleMenu()">Kontakt</a>
+  <div class="mob-btns" id="mobBtns">
+    <button class="btn-ghost" onclick="toggleMenu();openModal('login')">Hyrje</button>
+    <button class="btn-primary" onclick="toggleMenu();openModal('register')">Regjistrohu</button>
+  </div>
+</div>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="blob blob-a"></div><div class="blob blob-b"></div><div class="blob blob-c"></div>
+  <div class="hero-chip"><span class="chip-dot"></span>Platforma #1 e Pasurive në Kosovë</div>
+  <h1>Gjej Pronën<br>e <em>Ëndrrave Tua</em></h1>
+  <p class="hero-p">Bli, shit ose jep me qira shtëpi, apartamente dhe zyre në të gjitha qytetet e Kosovës.</p>
+
+  <div class="search-wrap">
+    <div class="search-tabs">
+      <button class="s-tab active" data-type="" onclick="setTab(this)">Të gjitha</button>
+      <button class="s-tab" data-type="shitet" onclick="setTab(this)">Bli</button>
+      <button class="s-tab" data-type="me-qira" onclick="setTab(this)">Qiraja</button>
+      <button class="s-tab" data-type="i-ri" onclick="setTab(this)">I Ri</button>
+    </div>
+    <div class="search-bar">
+      <div class="sf">
+        <label>Qyteti</label>
+        <select id="srch-city">
+          <option value="">Çdo qytet</option>
+          <option>Prishtinë</option><option>Prizren</option><option>Pejë</option>
+          <option>Ferizaj</option><option>Gjakovë</option><option>Mitrovicë</option>
+          <option>Gjilan</option><option>Vushtrri</option>
+        </select>
+      </div>
+      <div class="sf">
+        <label>Lloji</label>
+        <select id="srch-type">
+          <option value="">Çdo lloj</option>
+          <option value="apartament">Apartament</option>
+          <option value="shtepi">Shtëpi</option>
+          <option value="vila">Vila</option>
+          <option value="zyre">Zyrë</option>
+          <option value="toke">Tokë</option>
+        </select>
+      </div>
+      <div class="sf">
+        <label>Kërko</label>
+        <input type="text" id="srch-text" placeholder="Çdo gjë...">
+      </div>
+      <button class="btn-srch" onclick="doSearch()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+        Kërko
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ── STATS ── -->
+<div class="stats">
+  <div class="stat"><strong id="stat-total">–</strong><span>Prona Aktive</span></div>
+  <div class="stat"><strong>12</strong><span>Qytete</span></div>
+  <div class="stat"><strong id="stat-builders">–</strong><span>Ndërtues & Agjenci</span></div>
+  <div class="stat"><strong>9,200+</strong><span>Klientë të Kënaqur</span></div>
+</div>
+
+<!-- ── AD TOP ── -->
+<div class="ad reveal" id="ad-top">
+  <div class="ad-lbl">Reklamë</div>
+  <p><strong>728 × 90 px — Hapsirë Reklamimi</strong><br>Vendosni reklamën tuaj dhe arrini mijëra blerës e qiramarrës</p>
+  <a href="mailto:reklame@pronakosova.com">Kontakto →</a>
+</div>
+
+<!-- ── CITIES ── -->
+<div class="sec reveal">
+  <div class="sec-top">
+    <h2>Kërko sipas <i>Qytetit</i></h2>
+    <a href="#" class="sec-all">Shih të gjitha →</a>
+  </div>
+  <div class="city-grid" id="cityGrid">
+    <!-- loaded from API /stats/cities -->
+    <div class="city-card reveal d1"><div class="city-inner" style="background:linear-gradient(150deg,#1a2e50,#2c4a84)"><div class="city-grad"></div><div class="city-info"><h3>Prishtinë</h3><p id="city-count-Prishtinë">– prona</p></div></div></div>
+    <div class="city-card reveal d2"><div class="city-inner" style="background:linear-gradient(150deg,#3b1e0c,#7c3e1a)"><div class="city-grad"></div><div class="city-info"><h3>Prizren</h3><p id="city-count-Prizren">– prona</p></div></div></div>
+    <div class="city-card reveal d3"><div class="city-inner" style="background:linear-gradient(150deg,#0f3040,#1a5264)"><div class="city-grad"></div><div class="city-info"><h3>Pejë</h3><p id="city-count-Pejë">– prona</p></div></div></div>
+    <div class="city-card reveal d4"><div class="city-inner" style="background:linear-gradient(150deg,#0d2e1a,#1a5432)"><div class="city-grad"></div><div class="city-info"><h3>Ferizaj</h3><p id="city-count-Ferizaj">– prona</p></div></div></div>
+  </div>
+</div>
+
+<!-- ── LISTINGS + SIDEBAR ── -->
+<div class="listings-wrap">
+  <div class="reveal">
+    <div class="sec-top" style="margin-bottom:22px">
+      <h2>Prona të <i>Shquara</i></h2>
+      <a href="#" class="sec-all" onclick="clearFilters()">Shih të gjitha →</a>
+    </div>
+    <div class="listings-grid" id="listingsGrid">
+      <!-- skeleton placeholders -->
+    </div>
+    <div class="pagination" id="pagination"></div>
+  </div>
+  <div class="ad-sidebar reveal">
+    <div class="ad-box"><div class="ad-lbl">Reklamë</div><div class="ad-box-ico">🏦</div><strong>Reklama Juaj</strong><p>260 × 300 px<br>reklame@pronakosova.com</p></div>
+    <div class="ad-box"><div class="ad-lbl">Reklamë</div><div class="ad-box-ico">🏗</div><strong>Reklama Juaj</strong><p>260 × 300 px<br>Blloku anësor</p></div>
+  </div>
+</div>
+
+<!-- ── COMPANY STRIP ── -->
+<div class="company-strip reveal">
+  <div class="cs-text">
+    <h3>Jeni Kompani ose Ndërtues?</h3>
+    <p>Listoni të gjitha projektet tuaja — menaxhoni prona në shkallë të madhe.</p>
+  </div>
+  <button class="btn-white" onclick="openModal('company')">Regjistro Kompaninë →</button>
+</div>
+
+<!-- ── BUILDERS ── -->
+<div class="sec reveal" id="buildersSection">
+  <div class="sec-top">
+    <h2>Kërko sipas <i>Ndërtuesit</i></h2>
+    <a href="#" class="sec-all">Shih të gjitha →</a>
+  </div>
+  <div class="builders-grid" id="buildersGrid">
+    <!-- loaded from API -->
+  </div>
+</div>
+
+<!-- ── AD BOTTOM ── -->
+<div class="ad reveal" style="margin:0 36px 56px">
+  <div class="ad-lbl">Reklamë</div>
+  <p><strong>970 × 250 px — Reklamë e Madhe</strong><br>Baneri i poshtëm — ekspozicion maksimal</p>
+  <a href="mailto:reklame@pronakosova.com">Kontakto →</a>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="f-grid">
+    <div>
+      <span class="f-logo"><b>Prona</b>Kosova</span>
+      <p class="f-desc">Platforma kryesore e pasurive të paluajtshme në Kosovë. Bli, shit ose jep me qira lehtë dhe me siguri.</p>
+    </div>
+    <div class="f-col"><h4>Shfleto</h4><a href="#" onclick="filterByType('shitet')">Bli Pronë</a><a href="#">Shit Pronë</a><a href="#" onclick="filterByType('me-qira')">Me Qira</a><a href="#">Komerciale</a><a href="#">Toka</a></div>
+    <div class="f-col"><h4>Kompania</h4><a href="#">Rreth Nesh</a><a href="#">Reklamë</a><a href="#">Kushtet</a><a href="#">Privatësia</a><a href="#">Kontakt</a></div>
+  </div>
+  <div class="f-bottom"><span>© 2025 PronaKosova. Të gjitha të drejtat e rezervuara.</span><span>🇽🇰 Bërë me ❤ në Kosovë</span></div>
+</footer>
+
+<!-- ── AUTH MODAL ── -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-x" onclick="closeModal()">✕</button>
+    <h2 id="m-title">Regjistrohu</h2>
+    <p class="modal-sub" id="m-sub">Zgjidh llojin e llogarisë tënde</p>
+    <div class="acct-row" id="m-types">
+      <div class="acct active" onclick="pickType(this)"><span class="ic">👤</span><div class="lb">Blerës</div></div>
+      <div class="acct" onclick="pickType(this)"><span class="ic">🏠</span><div class="lb">Shitës</div></div>
+      <div class="acct" onclick="pickType(this)"><span class="ic">🏗</span><div class="lb">Kompani</div></div>
+    </div>
+    <button class="btn-google" id="g-btn" onclick="handleGoogle()">
+      <svg class="g-ico" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      <span id="g-txt">Regjistrohu me Google</span>
+    </button>
+    <div class="divider">ose</div>
+    <div id="m-company" style="display:none"><div class="fg"><label>Emri i Kompanisë</label><input id="inp-company" type="text" placeholder="p.sh. Albatros Construction"></div></div>
+    <div class="fg" id="m-name"><label>Emri & Mbiemri</label><input id="inp-name" type="text" placeholder="Emri juaj i plotë"></div>
+    <div class="fg"><label>Email</label><input id="inp-email" type="email" placeholder="email@shembull.com"></div>
+    <div class="fg" id="m-pass"><label>Fjalëkalimi</label><input id="inp-pass" type="password" placeholder="Minimum 8 karaktere"></div>
+    <div class="fg" id="m-city"><label>Qyteti</label><select id="inp-city"><option value="">Zgjidhni qytetin</option><option>Prishtinë</option><option>Prizren</option><option>Pejë</option><option>Ferizaj</option><option>Gjakovë</option><option>Mitrovicë</option><option>Gjilan</option><option>Vushtrri</option></select></div>
+    <div class="form-error" id="m-error"></div>
+    <button class="btn-full" id="m-btn" onclick="submitAuth()">Krijo Llogari →</button>
+    <div class="m-footer" id="m-foot">Keni llogari? <a href="#" onclick="openModal('login')">Hyni këtu</a></div>
+  </div>
+</div>
+
+<!-- ── LISTING DETAIL PANEL ── -->
+<div class="detail-overlay" id="detailOverlay" onclick="closeDetail(event)">
+  <div class="detail-panel" id="detailPanel">
+    <button class="detail-close" onclick="closeDetailPanel()">✕</button>
+    <div class="detail-imgs" id="detail-imgs"><div class="detail-imgs-placeholder">🏠</div></div>
+    <div class="detail-body">
+      <div class="detail-badges" id="detail-badges"></div>
+      <div class="detail-title" id="detail-title"></div>
+      <div class="detail-loc" id="detail-loc"></div>
+      <div class="detail-price" id="detail-price"></div>
+      <div class="detail-specs" id="detail-specs"></div>
+      <div class="detail-desc" id="detail-desc"></div>
+      <div class="detail-contact" id="detail-contact"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── TOAST ── -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// CONFIG — change this to your backend URL
+// ═══════════════════════════════════════════════════════════════
+const API = 'http://localhost:5000/api';
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+let state = {
+  user: null,
+  token: localStorage.getItem('pk_token') || null,
+  currentPage: 1,
+  totalPages: 1,
+  filters: { listingType:'', propertyType:'', city:'', search:'' },
+  modalMode: 'register',
+  selectedAccountType: 'buyer',
+};
+
+// ═══════════════════════════════════════════════════════════════
+// API HELPER
+// ═══════════════════════════════════════════════════════════════
+async function api(path, options = {}) {
+  const headers = { 'Content-Type':'application/json', ...options.headers };
+  if (state.token) headers['Authorization'] = `Bearer ${state.token}`;
+  try {
+    const res = await fetch(API + path, { ...options, headers, credentials:'include' });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Gabim i serverit');
+    return data;
+  } catch(e) {
+    throw e;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════════════════════════
+function toast(msg, type = 'default') {
+  const wrap = document.getElementById('toastWrap');
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.innerHTML = `<span>${msg}</span>`;
+  wrap.appendChild(el);
+  setTimeout(() => el.remove(), 3800);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SKELETONS
+// ═══════════════════════════════════════════════════════════════
+function renderSkeletons(count = 6) {
+  const grid = document.getElementById('listingsGrid');
+  grid.innerHTML = Array(count).fill(0).map(() => `
+    <div class="skel-card">
+      <div class="skel-img skeleton"></div>
+      <div class="skel-body">
+        <div class="skel-line skeleton w40"></div>
+        <div class="skel-line skeleton w80"></div>
+        <div class="skel-line skeleton w60"></div>
+        <div class="skel-line skeleton w40"></div>
+      </div>
+    </div>`).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// LISTINGS
+// ═══════════════════════════════════════════════════════════════
+const BADGE_MAP = { 'shitet':'b-sell', 'me-qira':'b-rent', 'i-ri':'b-new' };
+const BADGE_LABEL = { 'shitet':'Shitet', 'me-qira':'Me Qira', 'i-ri':'I Ri' };
+const EMOJI_MAP = { 'apartament':'🏢', 'shtepi':'🏠', 'vila':'🏘', 'zyre':'🏢', 'toke':'🌳', 'dyqan':'🏪', 'garazh':'🚗', 'tjeter':'🏗' };
+const THUMB_COLORS = ['#dce9ff','#d5f0e5','#fdebd0','#ede8f5','#d6eaf8','#e0f5ec','#fdf3d0','#f0e8f5'];
+
+function renderListing(l, i) {
+  const badgeClass = BADGE_MAP[l.listingType] || 'b-sell';
+  const badgeLabel = BADGE_LABEL[l.listingType] || l.listingType;
+  const emoji = EMOJI_MAP[l.propertyType] || '🏠';
+  const color = THUMB_COLORS[i % THUMB_COLORS.length];
+  const img = l.coverImage || (l.images && l.images[0]?.url);
+  const thumbHtml = img
+    ? `<img src="${img}" alt="${l.title}" loading="lazy">`
+    : `<div class="l-thumb-emoji">${emoji}</div>`;
+
+  const price = l.priceFormatted ||
+    ('€' + Number(l.price).toLocaleString('sq-AL') + (l.priceType === 'per-muaj' ? ' <small>/ muaj</small>' : ''));
+
+  const isSaved = state.user?.savedListings?.includes(l._id);
+
+  return `
+    <div class="listing-card" onclick="openDetail('${l._id}')">
+      <div class="l-thumb" style="background:${color}">
+        ${thumbHtml}
+        <div class="badge ${badgeClass}">${badgeLabel}</div>
+        <button class="l-save-btn" onclick="event.stopPropagation();toggleSave('${l._id}',this)" title="${isSaved ? 'Hiq nga të ruajtura' : 'Ruaj'}">${isSaved ? '❤️' : '🤍'}</button>
+      </div>
+      <div class="l-body">
+        <div class="l-type">${l.propertyType || ''} ${l.rooms ? '· ' + l.rooms + '+1' : ''}</div>
+        <div class="l-title">${l.title}</div>
+        <div class="l-loc">📍 ${l.city}${l.neighborhood ? ', ' + l.neighborhood : ''}</div>
+        <div class="l-price">${price}</div>
+        <div class="l-meta">
+          ${l.rooms ? `<span>🛏 ${l.rooms} dhoma</span>` : ''}
+          ${l.bathrooms ? `<span>🚿 ${l.bathrooms} banja</span>` : ''}
+          ${l.area ? `<span>📐 ${l.area} m²</span>` : ''}
+        </div>
+      </div>
+    </div>`;
+}
+
+async function loadListings(page = 1) {
+  renderSkeletons();
+  const p = new URLSearchParams({ page, limit: 6 });
+  if (state.filters.listingType) p.set('listingType', state.filters.listingType);
+  if (state.filters.propertyType) p.set('propertyType', state.filters.propertyType);
+  if (state.filters.city) p.set('city', state.filters.city);
+  if (state.filters.search) p.set('search', state.filters.search);
+
+  try {
+    const data = await api('/listings?' + p.toString());
+    state.currentPage = data.currentPage;
+    state.totalPages = data.totalPages;
+
+    document.getElementById('stat-total').textContent = data.total + '+';
+
+    const grid = document.getElementById('listingsGrid');
+    if (data.listings.length === 0) {
+      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:48px 0;color:var(--ink3)"><div style="font-size:3rem;margin-bottom:12px">🔍</div><p style="font-size:0.95rem">Nuk u gjetën prona me këto filtra.<br><a href="#" onclick="clearFilters()" style="color:var(--accent);font-weight:600">Fshi filtrat</a></p></div>`;
+    } else {
+      grid.innerHTML = data.listings.map((l, i) => renderListing(l, i)).join('');
+    }
+    renderPagination();
+  } catch(e) {
+    document.getElementById('listingsGrid').innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:48px 0;color:var(--ink3)"><p>Nuk mund të ngarkohen prona. Sigurohuni që backend-i është duke punuar.</p><p style="font-size:0.8rem;margin-top:6px;color:#ccc">${e.message}</p></div>`;
+  }
+}
+
+function renderPagination() {
+  const wrap = document.getElementById('pagination');
+  if (state.totalPages <= 1) { wrap.innerHTML = ''; return; }
+  let html = `<button class="page-btn" onclick="loadListings(${state.currentPage - 1})" ${state.currentPage===1?'disabled':''}>←</button>`;
+  for (let i = 1; i <= state.totalPages; i++) {
+    if (state.totalPages > 7 && i > 2 && i < state.totalPages - 1 && Math.abs(i - state.currentPage) > 1) {
+      if (i === 3 || i === state.totalPages - 2) html += `<span style="padding:0 4px;color:var(--ink3)">…</span>`;
+      continue;
+    }
+    html += `<button class="page-btn ${i===state.currentPage?'active':''}" onclick="loadListings(${i})">${i}</button>`;
+  }
+  html += `<button class="page-btn" onclick="loadListings(${state.currentPage + 1})" ${state.currentPage===state.totalPages?'disabled':''}>→</button>`;
+  wrap.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CITY STATS
+// ═══════════════════════════════════════════════════════════════
+async function loadCityStats() {
+  try {
+    const data = await api('/listings/stats/cities');
+    data.stats.forEach(s => {
+      const el = document.getElementById('city-count-' + s._id);
+      if (el) el.textContent = s.count + ' prona';
+    });
+  } catch(_) {}
+}
+
+// ═══════════════════════════════════════════════════════════════
+// BUILDERS
+// ═══════════════════════════════════════════════════════════════
+async function loadBuilders() {
+  const grid = document.getElementById('buildersGrid');
+  grid.innerHTML = Array(4).fill(0).map(()=>`<div class="skel-card" style="height:120px"><div class="skeleton" style="width:100%;height:100%;border-radius:14px"></div></div>`).join('');
+  try {
+    const data = await api('/builders?limit=4');
+    document.getElementById('stat-builders').textContent = (data.total || data.builders.length) + '+';
+    if (!data.builders.length) { grid.innerHTML = ''; return; }
+    grid.innerHTML = data.builders.map(b => `
+      <div class="builder-card" onclick="filterByBuilder('${b._id}','${b.name}')">
+        ${b.logo?.url ? `<img class="b-logo" src="${b.logo.url}" alt="${b.name}">` : `<div class="b-icon">🏗</div>`}
+        <div class="b-name">${b.name}</div>
+        <div class="b-city">📍 ${(b.cities || []).join(' · ') || '–'}</div>
+        <div class="b-count">${b.listingsCount ?? '–'} prona aktive →</div>
+      </div>`).join('');
+  } catch(_) {
+    grid.innerHTML = `<div style="grid-column:1/-1;color:var(--ink3);font-size:.85rem;padding:16px">Ndërtuesit nuk mund të ngarkohen.</div>`;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// LISTING DETAIL PANEL
+// ═══════════════════════════════════════════════════════════════
+async function openDetail(id) {
+  document.getElementById('detailOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  // Reset
+  document.getElementById('detail-title').textContent = 'Duke ngarkuar...';
+  document.getElementById('detail-price').textContent = '';
+  document.getElementById('detail-loc').textContent = '';
+  document.getElementById('detail-badges').innerHTML = '';
+  document.getElementById('detail-specs').innerHTML = '';
+  document.getElementById('detail-desc').textContent = '';
+  document.getElementById('detail-contact').innerHTML = '';
+  document.getElementById('detail-imgs').innerHTML = '<div class="detail-imgs-placeholder">⏳</div>';
+
+  try {
+    const { listing: l } = await api('/listings/' + id);
+    const badgeClass = BADGE_MAP[l.listingType] || 'b-sell';
+    const badgeLabel = BADGE_LABEL[l.listingType] || l.listingType;
+    const img = l.coverImage || l.images?.[0]?.url;
+
+    document.getElementById('detail-imgs').innerHTML = img
+      ? `<img src="${img}" alt="${l.title}">`
+      : `<div class="detail-imgs-placeholder">${EMOJI_MAP[l.propertyType] || '🏠'}</div>`;
+
+    document.getElementById('detail-badges').innerHTML =
+      `<span class="badge ${badgeClass}" style="position:static">${badgeLabel}</span>` +
+      (l.featured ? `<span class="badge b-new" style="position:static">⭐ E shquarë</span>` : '');
+
+    document.getElementById('detail-title').textContent = l.title;
+    document.getElementById('detail-loc').textContent = `📍 ${l.city}${l.neighborhood ? ', ' + l.neighborhood : ''}${l.address ? ' — ' + l.address : ''}`;
+
+    const price = l.priceFormatted || ('€' + Number(l.price).toLocaleString('sq-AL') + (l.priceType === 'per-muaj' ? ' / muaj' : ''));
+    document.getElementById('detail-price').innerHTML = price + (l.negotiable ? ' <small style="font-size:.75rem;color:var(--green)">(i negociueshëm)</small>' : '');
+
+    const specs = [];
+    if (l.rooms)     specs.push(`<div class="detail-spec"><strong>${l.rooms}+1</strong><span>Dhoma</span></div>`);
+    if (l.bathrooms) specs.push(`<div class="detail-spec"><strong>${l.bathrooms}</strong><span>Banja</span></div>`);
+    if (l.area)      specs.push(`<div class="detail-spec"><strong>${l.area}</strong><span>m²</span></div>`);
+    if (l.floor != null) specs.push(`<div class="detail-spec"><strong>${l.floor}</strong><span>Kati</span></div>`);
+    if (l.yearBuilt) specs.push(`<div class="detail-spec"><strong>${l.yearBuilt}</strong><span>Ndërtuar</span></div>`);
+    if (l.parking)   specs.push(`<div class="detail-spec"><strong>✓</strong><span>Parking</span></div>`);
+    document.getElementById('detail-specs').innerHTML = specs.join('');
+    document.getElementById('detail-desc').textContent = l.description || '';
+
+    // Contact section
+    const contact = l.postedBy || {};
+    const avatarHtml = contact.avatar
+      ? `<img src="${contact.avatar}" alt="${contact.name}">`
+      : `<span>${(contact.name||'?')[0].toUpperCase()}</span>`;
+    document.getElementById('detail-contact').innerHTML = `
+      <h4>Kontakto Shitësin</h4>
+      <div class="detail-contact-info">
+        <div class="detail-contact-avatar">${avatarHtml}</div>
+        <div><div class="detail-contact-name">${contact.name || '–'}</div><div class="detail-contact-type">${contact.companyName || (contact.accountType === 'company' ? 'Kompani' : 'Individ')}</div></div>
+      </div>
+      <button class="btn-primary" style="width:100%;padding:11px;font-size:.88rem" onclick="openInquiry('${l._id}','${(contact.name||'').replace(/'/g,"\\'")}')">✉️ Dërgo Mesazh</button>
+      ${l.contactPhone || contact.phone ? `<a href="tel:${l.contactPhone || contact.phone}" style="display:block;text-align:center;margin-top:10px;font-size:.83rem;color:var(--accent);text-decoration:none;font-weight:600">📞 ${l.contactPhone || contact.phone}</a>` : ''}
+    `;
+  } catch(e) {
+    document.getElementById('detail-title').textContent = 'Gabim: ' + e.message;
+  }
+}
+
+function closeDetail(e) {
+  if (e.target === document.getElementById('detailOverlay')) closeDetailPanel();
+}
+function closeDetailPanel() {
+  document.getElementById('detailOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// INQUIRY
+// ═══════════════════════════════════════════════════════════════
+let currentInquiryListingId = null;
+function openInquiry(listingId, sellerName) {
+  currentInquiryListingId = listingId;
+  const existing = document.getElementById('inquiryModal');
+  if (existing) existing.remove();
+
+  const modal = document.createElement('div');
+  modal.id = 'inquiryModal';
+  modal.className = 'inquiry-modal-overlay open';
+  modal.innerHTML = `
+    <div class="inquiry-modal">
+      <button class="modal-x" onclick="document.getElementById('inquiryModal').remove()" style="position:absolute;top:14px;right:14px">✕</button>
+      <h2 style="font-family:'Instrument Serif',serif;font-size:1.4rem;margin-bottom:4px">Dërgo Mesazh</h2>
+      <p style="font-size:.82rem;color:var(--ink3);margin-bottom:18px">Tek: ${sellerName}</p>
+      ${!state.user ? `
+        <div class="fg"><label>Emri</label><input id="inq-name" type="text" placeholder="Emri juaj"></div>
+        <div class="fg"><label>Email</label><input id="inq-email" type="email" placeholder="email@email.com"></div>
+        <div class="fg"><label>Telefon</label><input id="inq-phone" type="tel" placeholder="+383 44 ..."></div>
+      ` : ''}
+      <div class="fg"><label>Mesazhi</label><textarea id="inq-msg" rows="4" style="width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 12px;font-family:'Sora',sans-serif;font-size:.87rem;resize:vertical;outline:none" placeholder="Jam i interesuar për këtë pronë..."></textarea></div>
+      <button class="btn-full" onclick="submitInquiry()">Dërgo Mesazhin →</button>
+    </div>`;
+  modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+  document.body.appendChild(modal);
+}
+
+async function submitInquiry() {
+  const msg = document.getElementById('inq-msg')?.value?.trim();
+  if (!msg) { toast('Shkruani një mesazh', 'error'); return; }
+
+  const body = { listingId: currentInquiryListingId, message: msg };
+  if (!state.user) {
+    body.guestName  = document.getElementById('inq-name')?.value || '';
+    body.guestEmail = document.getElementById('inq-email')?.value || '';
+    body.guestPhone = document.getElementById('inq-phone')?.value || '';
+  }
+
+  try {
+    await api('/inquiries', { method:'POST', body: JSON.stringify(body) });
+    document.getElementById('inquiryModal')?.remove();
+    toast('✅ Mesazhi u dërgua me sukses!', 'success');
+  } catch(e) {
+    toast('Gabim: ' + e.message, 'error');
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SAVE LISTING (toggle heart)
+// ═══════════════════════════════════════════════════════════════
+async function toggleSave(id, btn) {
+  if (!state.user) { openModal('login'); return; }
+  try {
+    const data = await api('/listings/' + id + '/save', { method:'POST' });
+    btn.textContent = data.saved ? '❤️' : '🤍';
+    toast(data.message, 'success');
+  } catch(e) { toast(e.message, 'error'); }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SEARCH & FILTER
+// ═══════════════════════════════════════════════════════════════
+function setTab(el) {
+  document.querySelectorAll('.s-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  state.filters.listingType = el.dataset.type || '';
+  loadListings(1);
+}
+
+function doSearch() {
+  state.filters.city        = document.getElementById('srch-city').value;
+  state.filters.propertyType= document.getElementById('srch-type').value;
+  state.filters.search      = document.getElementById('srch-text').value.trim();
+  loadListings(1);
+  document.querySelector('.listings-wrap').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+function filterByType(type) {
+  state.filters.listingType = type;
+  document.querySelectorAll('.s-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.type === type);
+  });
+  loadListings(1);
+  document.querySelector('.listings-wrap').scrollIntoView({ behavior:'smooth' });
+}
+
+function filterByBuilder(id, name) {
+  state.filters.search = name;
+  document.getElementById('srch-text').value = name;
+  loadListings(1);
+  document.querySelector('.listings-wrap').scrollIntoView({ behavior:'smooth' });
+}
+
+function clearFilters() {
+  state.filters = { listingType:'', propertyType:'', city:'', search:'' };
+  document.getElementById('srch-city').value = '';
+  document.getElementById('srch-type').value = '';
+  document.getElementById('srch-text').value = '';
+  document.querySelectorAll('.s-tab').forEach(t => t.classList.toggle('active', t.dataset.type === ''));
+  loadListings(1);
+}
+
+document.getElementById('srch-text').addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+
+// City card click
+document.querySelectorAll('.city-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const city = card.querySelector('h3').textContent;
+    document.getElementById('srch-city').value = city;
+    state.filters.city = city;
+    loadListings(1);
+    document.querySelector('.listings-wrap').scrollIntoView({ behavior:'smooth' });
+  });
+});
+
+function scrollToBuilders() {
+  document.getElementById('buildersSection').scrollIntoView({ behavior:'smooth' });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// AUTH — TOKEN HANDLING
+// ═══════════════════════════════════════════════════════════════
+// Handle Google OAuth redirect back (?token=xxx in URL)
+(function checkOAuthReturn() {
+  const params = new URLSearchParams(window.location.search);
+  const tok = params.get('token');
+  if (tok) {
+    localStorage.setItem('pk_token', tok);
+    state.token = tok;
+    history.replaceState({}, '', window.location.pathname);
+    toast('✅ U kyçët me Google me sukses!', 'success');
+  }
+})();
+
+async function loadCurrentUser() {
+  if (!state.token) return;
+  try {
+    const data = await api('/auth/me');
+    state.user = data.user;
+    updateNavForUser(data.user);
+  } catch(e) {
+    state.token = null;
+    localStorage.removeItem('pk_token');
+  }
+}
+
+function updateNavForUser(user) {
+  const actions = document.getElementById('navActions');
+  const initial = (user.name || user.email || '?')[0].toUpperCase();
+  actions.innerHTML = `
+    <div class="user-avatar-btn" onclick="toggleDropdown()">
+      ${user.avatar ? `<img src="${user.avatar}" alt="${user.name}">` : initial}
+    </div>`;
+  document.getElementById('dd-name').textContent = user.name || user.email;
+  document.getElementById('dd-type').textContent =
+    user.accountType === 'company' ? (user.companyName || 'Kompani') :
+    user.accountType === 'seller' ? 'Shitës' : 'Blerës / Qiramarrës';
+
+  // mobile
+  document.getElementById('mobBtns').innerHTML =
+    `<button class="btn-ghost" style="flex:1" onclick="logout()">Çkyçu</button>`;
+}
+
+function toggleDropdown() {
+  document.getElementById('userDropdown').classList.toggle('open');
+}
+document.addEventListener('click', e => {
+  const dd = document.getElementById('userDropdown');
+  if (dd.classList.contains('open') && !e.target.closest('.user-avatar-btn') && !e.target.closest('#userDropdown'))
+    dd.classList.remove('open');
+});
+
+async function logout() {
+  try { await api('/auth/logout', { method:'POST' }); } catch(_) {}
+  state.token = null; state.user = null;
+  localStorage.removeItem('pk_token');
+  document.getElementById('userDropdown').classList.remove('open');
+  document.getElementById('navActions').innerHTML = `
+    <button class="btn-ghost" onclick="openModal('login')">Hyrje</button>
+    <button class="btn-primary" onclick="openModal('register')">Regjistrohu</button>`;
+  document.getElementById('mobBtns').innerHTML = `
+    <button class="btn-ghost" onclick="toggleMenu();openModal('login')">Hyrje</button>
+    <button class="btn-primary" onclick="toggleMenu();openModal('register')">Regjistrohu</button>`;
+  toast('U çkyçët me sukses.', 'success');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// AUTH MODAL
+// ═══════════════════════════════════════════════════════════════
+function openModal(type) {
+  state.modalMode = type;
+  document.getElementById('m-error').classList.remove('show');
+  document.getElementById('m-error').textContent = '';
+
+  const title = document.getElementById('m-title');
+  const sub   = document.getElementById('m-sub');
+  const btn   = document.getElementById('m-btn');
+  const foot  = document.getElementById('m-foot');
+  const types = document.getElementById('m-types');
+  const gTxt  = document.getElementById('g-txt');
+  const nameF = document.getElementById('m-name');
+  const compF = document.getElementById('m-company');
+  const cityF = document.getElementById('m-city');
+  const passF = document.getElementById('m-pass');
+
+  compF.style.display = 'none';
+  if (type === 'login') {
+    title.textContent = 'Hyni në Llogari';
+    sub.textContent = 'Mirë se u kthyet';
+    types.style.display = 'none';
+    nameF.style.display = 'none'; cityF.style.display = 'none';
+    btn.textContent = 'Hyni →';
+    gTxt.textContent = 'Hyni me Google';
+    foot.innerHTML = 'Nuk keni llogari? <a href="#" onclick="openModal(\'register\')">Regjistrohu</a>';
+  } else if (type === 'company') {
+    title.textContent = 'Regjistro Kompaninë';
+    sub.textContent = 'Profil kompanie me prona të pakufizuara';
+    types.style.display = 'none'; compF.style.display = 'block';
+    nameF.style.display = 'block'; cityF.style.display = 'block';
+    state.selectedAccountType = 'company';
+    btn.textContent = 'Regjistro Kompaninë →';
+    gTxt.textContent = 'Regjistrohu me Google';
+    foot.innerHTML = 'Keni llogari? <a href="#" onclick="openModal(\'login\')">Hyni këtu</a>';
+  } else {
+    title.textContent = 'Regjistrohu';
+    sub.textContent = 'Zgjidh llojin e llogarisë';
+    types.style.display = 'grid';
+    nameF.style.display = 'block'; cityF.style.display = 'block';
+    btn.textContent = 'Krijo Llogari →';
+    gTxt.textContent = 'Regjistrohu me Google';
+    foot.innerHTML = 'Keni llogari? <a href="#" onclick="openModal(\'login\')">Hyni këtu</a>';
+  }
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
+document.getElementById('modal').addEventListener('click', e => { if (e.target.id === 'modal') closeModal(); });
+
+function pickType(el) {
+  document.querySelectorAll('.acct').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+  const lbl = el.querySelector('.lb').textContent;
+  state.selectedAccountType = lbl === 'Kompani' ? 'company' : lbl === 'Shitës' ? 'seller' : 'buyer';
+  document.getElementById('m-company').style.display = state.selectedAccountType === 'company' ? 'block' : 'none';
+}
+
+async function submitAuth() {
+  const btn = document.getElementById('m-btn');
+  const errEl = document.getElementById('m-error');
+  errEl.classList.remove('show');
+
+  const email = document.getElementById('inp-email').value.trim();
+  const pass  = document.getElementById('inp-pass').value;
+
+  if (!email) { errEl.textContent = 'Email-i është i detyrueshëm.'; errEl.classList.add('show'); return; }
+
+  btn.disabled = true;
+  const origText = btn.textContent;
+  btn.textContent = 'Duke u procesuar...';
+
+  try {
+    let data;
+    if (state.modalMode === 'login') {
+      data = await api('/auth/login', { method:'POST', body: JSON.stringify({ email, password: pass }) });
+    } else {
+      const name = document.getElementById('inp-name').value.trim();
+      const city = document.getElementById('inp-city').value;
+      const companyName = document.getElementById('inp-company')?.value?.trim();
+      if (!name) { throw new Error('Emri është i detyrueshëm.'); }
+      if (!pass || pass.length < 8) { throw new Error('Fjalëkalimi duhet të ketë të paktën 8 karaktere.'); }
+      const body = { name, email, password: pass, accountType: state.selectedAccountType, city };
+      if (companyName) body.companyName = companyName;
+      data = await api('/auth/register', { method:'POST', body: JSON.stringify(body) });
+    }
+
+    state.token = data.token;
+    state.user = data.user;
+    localStorage.setItem('pk_token', data.token);
+    updateNavForUser(data.user);
+    closeModal();
+    toast(`✅ Mirë se ${state.modalMode === 'login' ? 'u kthyet' : 'u regjistruat'}, ${data.user.name}!`, 'success');
+    loadListings(1); // reload to show saved states
+  } catch(e) {
+    errEl.textContent = e.message;
+    errEl.classList.add('show');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = origText;
+  }
+}
+
+function handleGoogle() {
+  // Redirect to backend Google OAuth — it will come back with ?token=xxx
+  window.location.href = API + '/auth/google';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NAV MENU
+// ═══════════════════════════════════════════════════════════════
+function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+document.addEventListener('click', e => {
+  const m = document.getElementById('mobileMenu');
+  if (m.classList.contains('open') && !m.contains(e.target) && !e.target.closest('.nav-hamburger'))
+    m.classList.remove('open');
+});
+
+// ═══════════════════════════════════════════════════════════════
+// SCROLL REVEAL
+// ═══════════════════════════════════════════════════════════════
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+(async function init() {
+  await loadCurrentUser();
+  loadListings(1);
+  loadCityStats();
+  loadBuilders();
+})();
+
+<!-- ── JavaScript — load in order ── -->
+<script src="js/config.js"></script>
+<script src="js/state.js"></script>
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/listings.js"></script>
+<script src="js/detail.js"></script>
+<script src="js/inquiry.js"></script>
+<script src="js/builders.js"></script>
+<script src="js/search.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
