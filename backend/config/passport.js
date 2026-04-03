@@ -12,7 +12,7 @@ passport.use(new Local({ usernameField:'email' }, async (email, password, done) 
   } catch(e) { return done(e); }
 }));
 if (process.env.GOOGLE_CLIENT_ID) {
-  passport.use(new Google({ clientID: process.env.GOOGLE_CLIENT_ID, clientSecret: process.env.GOOGLE_CLIENT_SECRET, callbackURL: process.env.GOOGLE_CALLBACK_URL },
+  passport.use(new Google({ clientID: process.env.GOOGLE_CLIENT_ID, clientSecret: process.env.GOOGLE_CLIENT_SECRET, callbackURL: process.env.GOOGLE_CALLBACK_URL, proxy: true },
     async (at, rt, profile, done) => {
       try {
         const email = profile.emails[0].value.toLowerCase();

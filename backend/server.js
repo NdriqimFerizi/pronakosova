@@ -5,6 +5,7 @@ const rateLimit=require('express-rate-limit'),connectDB=require('./config/db'),p
 const errorHandler=require('./middleware/errorHandler');
 connectDB();
 const app=express();
+app.set('trust proxy',1);
 app.use(helmet());
 app.use(cors({origin:[process.env.CLIENT_URL,'http://localhost:3000','http://localhost:5001','http://127.0.0.1:5500','http://127.0.0.1:3000','null'],credentials:true,methods:['GET','POST','PUT','DELETE','OPTIONS']}));
 app.use(rateLimit({windowMs:15*60*1000,max:500}));
@@ -12,7 +13,8 @@ app.use(express.json({limit:'10mb'}));
 app.use(express.urlencoded({extended:true,limit:'10mb'}));
 app.use(cookieParser());
 if(process.env.NODE_ENV==='development') app.use(morgan('dev'));
-app.use(session({secret:process.env.SESSION_SECRET||'secret',resave:false,saveUninitialized:false,store:MongoStore.create({mongoUrl:process.env.MONGO_URI,touchAfter:24*3600}),cookie:{httpOnly:true,secure:false,maxAge:7*24*60*60*1000}}));
+const isProd=process.env.NODE_ENV==='production';
+app.use(session({secret:process.env.SESSION_SECRET||'secret',resave:false,saveUninitialized:true,store:MongoStore.create({mongoUrl:process.env.MONGO_URI,touchAfter:24*3600}),cookie:{httpOnly:true,secure:isProd,sameSite:isProd?'none':'lax',maxAge:7*24*60*60*1000}}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.get('/health',(req,res)=>res.json({success:true,message:'PronaKosova API is running 🏠',env:process.env.NODE_ENV}));
