@@ -39,6 +39,7 @@
   <a class="dd-item" href="#" onclick="Dropdown.close('userDropdown');openDashboard('saved')">❤️ Të Ruajtura</a>
   <a class="dd-item" href="#" onclick="Dropdown.close('userDropdown');openDashboard('messages')">✉️ Mesazhet</a>
   <div style="height:1px;background:var(--border);margin:4px 0"></div>
+  <a class="dd-item admin-only" href="#" onclick="Dropdown.close('userDropdown');Admin.open()" style="display:none">⚙️ Admin Panel</a>
   <a class="dd-item danger" onclick="logout()">🚪 Çkyçu</a>
 </div>
 
@@ -240,6 +241,11 @@
 <div class="detail-overlay" id="dashboardOverlay"
   onclick="if(event.target===this)Dashboard.close()">
   <div class="dashboard-panel" id="dashboardPanel"></div>
+</div>
+
+<!-- ── ADMIN PANEL ── -->
+<div class="detail-overlay" id="adminOverlay" onclick="if(event.target===this)Admin.close()">
+  <div class="dashboard-panel" id="adminPanel"></div>
 </div>
 
 <!-- ── LISTING DETAIL PANEL ── -->
@@ -860,6 +866,7 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 <script src="js/search.js"></script>
 <script src="js/post-listing.js"></script>
 <script src="js/dashboard.js"></script>
+<script src="js/admin.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

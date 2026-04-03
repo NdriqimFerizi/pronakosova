@@ -79,6 +79,11 @@ const Auth = {
       user.accountType === 'company' ? (user.companyName || 'Kompani') :
       user.accountType === 'seller'  ? 'Shitës' : 'Blerës / Qiramarrës';
 
+    // Show admin link only for admins
+    document.querySelectorAll('.admin-only').forEach(el => {
+      el.style.display = user.role === 'admin' ? 'block' : 'none';
+    });
+
     if (mobBtns) mobBtns.innerHTML = `<button class="btn-ghost" style="flex:1" onclick="Auth.logout()">🚪 Çkyçu</button>`;
   },
 

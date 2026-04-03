@@ -88,3 +88,6 @@ function closeDetailPanel()     { Detail.closePanel(); }
 
 // Listings
 function clearFilters()         { Listings.clearFilters(); }
+
+// Admin
+function openAdmin(tab)         { Admin.open(tab); }
