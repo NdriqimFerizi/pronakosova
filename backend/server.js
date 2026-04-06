@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express=require('express'),cors=require('cors'),helmet=require('helmet'),morgan=require('morgan');
-const cookieParser=require('cookie-parser'),session=require('express-session'),MongoStore=require('connect-mongo');
+const cookieParser=require('cookie-parser');
 const rateLimit=require('express-rate-limit'),connectDB=require('./config/db'),passport=require('./config/passport');
 const errorHandler=require('./middleware/errorHandler');
 connectDB();
@@ -13,10 +13,7 @@ app.use(express.json({limit:'10mb'}));
 app.use(express.urlencoded({extended:true,limit:'10mb'}));
 app.use(cookieParser());
 if(process.env.NODE_ENV==='development') app.use(morgan('dev'));
-const isProd=process.env.NODE_ENV==='production';
-app.use(session({secret:process.env.SESSION_SECRET||'secret',resave:false,saveUninitialized:true,store:MongoStore.create({mongoUrl:process.env.MONGO_URI,touchAfter:24*3600}),cookie:{httpOnly:true,secure:isProd,sameSite:isProd?'none':'lax',maxAge:7*24*60*60*1000}}));
 app.use(passport.initialize());
-app.use(passport.session());
 app.get('/health',(req,res)=>res.json({success:true,message:'PronaKosova API is running 🏠',env:process.env.NODE_ENV}));
 app.use('/api/auth',require('./routes/auth'));
 app.use('/api/listings',require('./routes/listings'));
