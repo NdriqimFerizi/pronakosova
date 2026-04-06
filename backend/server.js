@@ -28,5 +28,5 @@ app.use((req,res)=>res.status(404).json({success:false,message:'Route not found'
 app.use(errorHandler);
 const PORT=process.env.PORT||5000;
 const server=app.listen(PORT,()=>console.log(`\n🚀 http://localhost:${PORT}  |  Health: http://localhost:${PORT}/health\n`));
-process.on('unhandledRejection',e=>{console.error('❌',e.message);server.close(()=>process.exit(1));});
+process.on('unhandledRejection',e=>{console.error('❌ Unhandled rejection:',e.message);});
 module.exports=app;
